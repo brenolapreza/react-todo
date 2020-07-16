@@ -3,37 +3,45 @@ import React, { Component } from 'react'
 
 export default class Module extends Component {
 
-        constructor(props){
-            super(props);
+    constructor(props) {
+        super(props);
 
-            this.state = {
-                valor: []
-            }
-
-            this.handleChange = this.handleChange.bind(this)
-            this.handleSubmit = this.handleSubmit.bind(this)
+        this.state = {
+            tarefa: "",
+            tarefas: ["Tarefa 1 ", "Tarefa 2 ", "Tarefa 3 ", "Tarefa 4 "]
         }
 
-   
-        handleChange(event) {
-            this.setState({
-                valor: event.target.value
-            })
-        }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+
+    handleChange(event) {
+        this.setState({
+            tarefa: event.target.value
+        })
+    }
 
     handleSubmit(event) {
-        alert('Um nome foi enviado: ' + this.state.valor);
+        this.setState({
+            tarefa: "",
+            tarefas: [].concat(this.state.tarefas, this.state.tarefa),
+        })
         event.preventDefault();
-        
+
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" value={this.state.valor} onChange={this.handleChange} />
-                <input type="submit" value="valor" />
-                <h1>{this.state.valor}</h1>
-            </form>
+            <>
+                <form onSubmit={this.handleSubmit}>
+                    <input type="text" value={this.state.tarefa} onChange={this.handleChange} />
+                    <input type="submit" value="valor" onClick={this.handleSubmit}/>
+                </form>
+                <ul>
+                    {this.state.tarefas.map( tarefa => ( <li>{tarefa}</li> ) )}
+                </ul>
+            </>
 
         );
     }
